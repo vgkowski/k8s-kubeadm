@@ -9,7 +9,7 @@ resource "template_dir" "kubeadm" {
     calico_cni_version = "${var.calico_cni_version}"
     flannel_version    = "${var.flannel_version}"
 
-    ip                 = "${element(var.master_nodes,0)}"
+    apiserver_ip       = "0.0.0.0"
     port               = "${var.apiserver_port}"
     dns_domain         = "${var.cluster_domain}"
     service_cidr       = "${var.service_cidr}"
@@ -17,7 +17,7 @@ resource "template_dir" "kubeadm" {
     kube_version       = "${var.kube_version}"
     token              = "${var.token}"
     token_ttl          = "${var.token_ttl}"
-    cluster_public_dns = "${var.cluster_public_dns}"
+    apiserver_dns      = "${var.apiserver_dns}"
   }
 }
 
@@ -25,12 +25,12 @@ resource "template_dir" "kubeadm" {
 resource "null_resource" "kubeadm_init" {
 
   connection {
-    host        = "${element(var.master_nodes,0)}"
+    host        = "${element(var.master_ip,0)}"
     type        = "ssh"
     user        = "core"
     private_key = "${var.private_key}"
 
-    bastion_host        = "${var.bastion_host}"
+    bastion_host        = "${var.bastion_ip}"
     bastion_port        = "22"
     bastion_user        = "core"
     bastion_private_key = "${var.private_key}"
@@ -46,7 +46,7 @@ resource "null_resource" "kubeadm_init" {
     inline = [
       // workaround to introduce a depency on required modules
       "echo ${join(",",var.master_dependencies)}",
-      "docker run -it -e PROXY=${var.proxy_ip}:${var.proxy_port} -e NO_PROXY=${var.proxy_ip},.local -e K8S_VERSION=${var.kube_version} -v /etc:/rootfs/etc -v /opt:/rootfs/opt -v /usr/bin:/rootfs/usr/bin vgkowski/kubeadm-installer-coreos:${var.kubeadm_installer_version}",
+      "docker run -it -e K8S_VERSION=${var.kube_version} -v /etc:/rootfs/etc -v /opt:/rootfs/opt -v /usr/bin:/rootfs/usr/bin vgkowski/kubeadm-installer-coreos:${var.kubeadm_installer_version}",
       "sudo systemctl daemon-reload",
       "sudo systemctl enable kubelet",
       "sudo kubeadm reset",

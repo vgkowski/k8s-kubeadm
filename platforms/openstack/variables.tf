@@ -164,5 +164,28 @@ The AZ assigned to the generated OpenStack resource.
 EOF
 }
 
+variable "openstack_dns_zone" {
+  type    = "string"
+  default = ""
+
+  description = <<EOF
+The DNS zone used in designate.
+EOF
+}
+
+variable "openstack_lb_provider" {
+  type    = "string"
+  default = "haproxy"
+
+  description = <<EOF
+The type of load balancer used.
+EOF
+}
+
+variable "openstack_insecure_api" {
+  default = true
+}
+
+
 
 

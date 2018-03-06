@@ -12,7 +12,7 @@ EOF
 
 variable "kube_version" {
   type    = "string"
-  default = "v1.7.6"
+  default = "v1.9.1"
 
   description = <<EOF
 The version of Kubernetes to install
@@ -35,15 +35,6 @@ variable "worker_count" {
 
   description = <<EOF
 The number of worker nodes to be created.
-EOF
-}
-
-variable "edge_count" {
-  type    = "string"
-  default = "1"
-
-  description = <<EOF
-The number of edge nodes to be created.
 EOF
 }
 
@@ -130,34 +121,6 @@ variable "flannel_mode" {
   type    = "string"
   default = "vxlan"
   description = "The flannel mode used (vxlan for clouds or hostgw for baremetal)"
-}
-
-variable "lowperf_disk_size" {
-  type    = "string"
-  default = "25"
-  description = "The size of disk to provision for low performance. For openstack it's Cinder disk, 2 disks per VM"
-}
-
-variable "highperf_disk_size" {
-  type    = "string"
-  default = "25"
-  description = <<EOF
-The size of disk to provision for high performance.
-For cloudwatt it's ephemeral SSD disks, 2 disks per VM.
-For devwatt it's extremIO block storage.
-EOF
-}
-
-variable "upstream_proxy_ip" {
-  type    = "string"
-  default = ""
-  description = "The IP of the external proxy to access Internet"
-}
-
-variable "upstream_proxy_port" {
-  type    = "string"
-  default = ""
-  description = "The port of the external proxy to access Internet"
 }
 
 variable "kubeadm_installer_version" {

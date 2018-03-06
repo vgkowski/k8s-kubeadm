@@ -17,19 +17,3 @@ variable "resolvconf_content" {
 variable "instance_count" {
   type = "string"
 }
-
-variable "upstream_proxy_ip" {
-  type = "string"
-}
-
-variable "upstream_proxy_port" {
-  type = "string"
-}
-
-variable "internal_proxy_ip" {
-  type = "string"
-}
-
-variable "internal_proxy_port" {
-  type = "string"
-}

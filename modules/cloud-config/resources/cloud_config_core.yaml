@@ -14,10 +14,4 @@ users:
 
 hostname: "${cluster_name}-${hostname_infix}-${index}"
 
-${proxy_docker}
-
-${disks}
-
-${proxy_server}
-
 ${kernel}

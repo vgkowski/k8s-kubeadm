@@ -131,39 +131,17 @@ set -e
 # wait for Kubernetes pods
 wait_for_pods kube-system
 
-# Taints and label edge nodes
-EDGE_NODES=${edge_nodes}
-wait_for_nodes $EDGE_NODES
-for i in $EDGE_NODES
-do
-    $KUBECTL taint nodes $i node-role.kubernetes.io/edge=:NoSchedule
-    $KUBECTL label nodes $i node-role.kubernetes.io/edge=
-done
-
 # Creating resources
 echo "Creating ingress resources"
 $KUBECTL apply -f ingress/ingress-rbac.yaml
 $KUBECTL apply -f ingress/default-backend.yaml
 $KUBECTL apply -f ingress/ingress-controller.yaml
 
-echo "Modifying apiserver service"
-$KUBECTL apply -f kube-apiserver/kube-apiserver.yaml
-$KUBECTL apply -f kube-apiserver/kube-apiserver-endpoint.yaml
-
 echo "Creating dashboard app"
 $KUBECTL apply -f kube-dashboard/kube-dashboard.yaml
 
-echo "Creating local volume provisioner"
-$KUBECTL apply -f local-volumes/storage-classes.yaml
-$KUBECTL apply -f local-volumes/admin_account.yaml
-export HELM_URL=http://storage.googleapis.com/kubernetes-helm/helm-v2.7.2-linux-amd64.tar.gz
-curl "$HELM_URL" | sudo tar --strip-components 1 -C /opt/bin linux-amd64/helm -zxf -
-/opt/bin/helm template local-volumes/helm > local-volumes/provisioner_generated.yaml
-$KUBECTL apply -f local-volumes/provisioner_generated.yaml
 
-
-
-echo "Creating kube-prometheus"
+# echo "Creating kube-prometheus"
 
 
 echo "Kube-apps installation is done"

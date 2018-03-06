@@ -1,12 +1,8 @@
-variable "master_nodes" {
+variable "master_ip" {
   type = "list"
 }
 
-variable "master_count" {
-  type = "string"
-}
-
-variable "worker_nodes" {
+variable "worker_ip" {
   type = "list"
 }
 
@@ -14,15 +10,7 @@ variable "worker_count" {
   type = "string"
 }
 
-variable "edge_nodes" {
-  type = "list"
-}
-
-variable "edge_count" {
-  type = "string"
-}
-
-variable "bastion_host" {
+variable "bastion_ip" {
   type    = "string"
 }
 
@@ -34,7 +22,7 @@ variable "apiserver_port" {
   type    = "string"
 }
 
-variable "cluster_public_dns" {
+variable "apiserver_dns" {
   type    = "string"
 }
 
@@ -83,14 +71,6 @@ variable "calico_version" {
 }
 
 variable "calico_cni_version" {
-  type    = "string"
-}
-
-variable "proxy_ip" {
-  type    = "string"
-}
-
-variable "proxy_port" {
   type    = "string"
 }
 

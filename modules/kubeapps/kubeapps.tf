@@ -1,26 +1,18 @@
 resource "template_dir" "kube_apps" {
   source_dir      = "${path.module}/resources"
   destination_dir = "./generated/kubeapps"
-
-  vars {
-    apiserver_port     = "${var.apiserver_port}"
-    apiserver_nodeport = "${var.apiserver_nodeport}"
-    edge_nodes         = "${join(" ",var.edge_nodes)}"
-    apiserver_ip       = "${var.master_node}"
-    helm_version       = "${var.helm_version}"
-  }
 }
 
 
 resource "null_resource" "kube_apps" {
 
   connection {
-    host        = "${var.master_node}"
+    host        = "${var.master_ip}"
     type        = "ssh"
     user        = "core"
     private_key = "${var.private_key}"
 
-    bastion_host        = "${var.bastion_host}"
+    bastion_host        = "${var.bastion_ip}"
     bastion_port        = "22"
     bastion_user        = "core"
     bastion_private_key = "${var.private_key}"
