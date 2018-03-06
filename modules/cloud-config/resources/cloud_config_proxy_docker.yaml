@@ -1,0 +1,9 @@
+coreos:
+  units:
+    - name: docker.service
+      enable: true
+      drop-ins:
+        - name: 10-proxy.conf
+          content: |
+            [Service]
+            Environment="HTTP_PROXY=http://${proxy_server}:${proxy_port}"

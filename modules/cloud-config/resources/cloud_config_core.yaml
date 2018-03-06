@@ -1,0 +1,23 @@
+#cloud-config
+
+users:
+  - name: "core"
+    ssh-authorized-keys:
+      - "${public_key}"
+
+#write_files:
+#  - path: "/etc/resolv.conf"
+#    permissions: "0644"
+#    owner: "root"
+#    content: |
+#      ${resolvconf_content}
+
+hostname: "${cluster_name}-${hostname_infix}-${index}"
+
+${proxy_docker}
+
+${disks}
+
+${proxy_server}
+
+${kernel}
