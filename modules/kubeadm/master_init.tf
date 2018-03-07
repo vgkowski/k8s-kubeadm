@@ -10,14 +10,13 @@ resource "template_dir" "kubeadm" {
     flannel_version    = "${var.flannel_version}"
 
     apiserver_ip       = "0.0.0.0"
-    port               = "${var.apiserver_port}"
     dns_domain         = "${var.cluster_domain}"
     service_cidr       = "${var.service_cidr}"
     pod_cidr           = "${var.pod_cidr}"
     kube_version       = "${var.kube_version}"
     token              = "${var.token}"
     token_ttl          = "${var.token_ttl}"
-    apiserver_dns      = "${var.apiserver_dns}"
+    apiserver_dns      = "- ${var.apiserver_external_dns}\n- ${var.apiserver_internal_dns}\n"
   }
 }
 
@@ -46,11 +45,20 @@ resource "null_resource" "kubeadm_init" {
     inline = [
       // workaround to introduce a depency on required modules
       "echo ${join(",",var.master_dependencies)}",
-      "docker run -it -e K8S_VERSION=${var.kube_version} -v /etc:/rootfs/etc -v /opt:/rootfs/opt -v /usr/bin:/rootfs/usr/bin vgkowski/kubeadm-installer-coreos:${var.kubeadm_installer_version}",
-      "sudo systemctl daemon-reload",
-      "sudo systemctl enable kubelet",
-      "sudo kubeadm reset",
-      "sudo systemctl restart kubelet",
+      "sudo mkdir -p /opt/cni/bin",
+      "CNI_VERSION=\"v0.6.0\"",
+      "sudo curl -L \"https://github.com/containernetworking/plugins/releases/download/$${CNI_VERSION}/cni-plugins-amd64-$${CNI_VERSION}.tgz\" | sudo tar -C /opt/cni/bin -xz",
+      "sudo mkdir -p /opt/bin",
+      "RELEASE=\"$(curl -sSL https://dl.k8s.io/release/stable.txt)\"",
+      "cd /opt/bin",
+      "sudo curl -L --remote-name-all https://storage.googleapis.com/kubernetes-release/release/$${RELEASE}/bin/linux/amd64/{kubeadm,kubelet,kubectl}",
+      "sudo chmod +x {kubeadm,kubelet,kubectl}",
+
+      "sudo sh -c \"curl -sSL \\\"https://raw.githubusercontent.com/kubernetes/kubernetes/$${RELEASE}/build/debs/kubelet.service\\\" | sed \\\"s:/usr/bin:/opt/bin:g\\\" > /etc/systemd/system/kubelet.service\"",
+      "sudo mkdir -p /etc/systemd/system/kubelet.service.d",
+      "sudo sh -c \"curl -sSL \\\"https://raw.githubusercontent.com/kubernetes/kubernetes/$${RELEASE}/build/debs/10-kubeadm.conf\\\" | sed \\\"s:/usr/bin:/opt/bin:g\\\" > /etc/systemd/system/kubelet.service.d/10-kubeadm.conf\"",
+      "sudo systemctl enable kubelet && sudo systemctl start kubelet",
+
       "sudo kubeadm init --ignore-preflight-errors=all --config=/home/core/kubeadm/kubeadm_master.cfg",
       "mkdir -p /home/core/.kube",
       "sudo cp /etc/kubernetes/admin.conf /home/core/.kube/config",

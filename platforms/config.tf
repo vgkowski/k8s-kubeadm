@@ -71,18 +71,9 @@ variable "cluster_public_dns" {
 
 variable "apiserver_port" {
   type    = "string"
-  default = "6443"
+  default = "443"
 
-  description = "The secured port to access the API server from inside the cluster"
-}
-
-variable "apiserver_nodeport" {
-  type    = "string"
-  default = "31000"
-
-  description = <<EOF
-The secured port to access the API server from outside the cluster. Used in a NodePort service on edge nodes.
-EOF
+  description = "The secured port to access the API server"
 }
 
 variable "kube_token" {

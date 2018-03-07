@@ -29,6 +29,16 @@ resource "openstack_networking_secgroup_rule_v2" "api_server" {
   security_group_id = "${var.secgroup_id}"
 }
 
+resource "openstack_networking_secgroup_rule_v2" "api_server2" {
+  direction = "ingress"
+  ethertype = "IPv4"
+  protocol = "tcp"
+  port_range_min = 6443
+  port_range_max = 6443
+  remote_group_id   = "${var.apiserver_secgroup_id2}"
+  security_group_id = "${var.secgroup_id}"
+}
+
 
 resource "openstack_networking_secgroup_rule_v2" "kube_scheduler" {
   direction = "ingress"

@@ -15,3 +15,10 @@ variable "apiserver_secgroup_id" {
 The security group ID authorized to access API server ports (generally the whole k8s cluster)
 EOF
 }
+
+variable "apiserver_secgroup_id2" {
+  type        = "string"
+  description = <<EOF
+The security group ID authorized to access API server ports (generally the whole k8s cluster)
+EOF
+}

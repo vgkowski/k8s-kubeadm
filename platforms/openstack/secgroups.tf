@@ -30,10 +30,11 @@ resource "openstack_networking_secgroup_v2" "master" {
 }
 
 module "master" {
-  source                = "./secgroups/k8s/master"
-  secgroup_id           = "${openstack_networking_secgroup_v2.master.id}"
-  etcd_secgroup_id      = "${openstack_networking_secgroup_v2.k8s.id}"
-  apiserver_secgroup_id = "${openstack_networking_secgroup_v2.k8s.id}"
+  source                 = "./secgroups/k8s/master"
+  secgroup_id            = "${openstack_networking_secgroup_v2.master.id}"
+  etcd_secgroup_id       = "${openstack_networking_secgroup_v2.k8s.id}"
+  apiserver_secgroup_id  = "${openstack_networking_secgroup_v2.k8s.id}"
+  apiserver_secgroup_id2 = "${openstack_networking_secgroup_v2.lbaas.id}"
 }
 
 resource "openstack_networking_secgroup_v2" "worker" {
@@ -45,4 +46,15 @@ resource "openstack_networking_secgroup_v2" "worker" {
 module "worker" {
   source             = "./secgroups/k8s/worker"
   secgroup_id        = "${openstack_networking_secgroup_v2.worker.id}"
+}
+
+resource "openstack_networking_secgroup_v2" "lbaas" {
+  name                 = "${var.cluster_name}_lbaas"
+  description          = "Ports needed by the LBaaS"
+  delete_default_rules = true
+}
+
+module "lbaas" {
+  source             = "./secgroups/lbaas"
+  secgroup_id        = "${openstack_networking_secgroup_v2.lbaas.id}"
 }

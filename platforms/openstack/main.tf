@@ -52,8 +52,10 @@ module "kubeadm" {
     openstack_networking_floatingip_v2.bastion.*.id
     )}"
 
+  apiserver_external_dns      = "${format("%s.%s", var.cluster_name, var.openstack_dns_zone)}"
+  apiserver_internal_dns      = "${format("%s-internal.%s", var.cluster_name, var.openstack_dns_zone)}"
+
   master_ip          = "${openstack_compute_instance_v2.master_node.*.access_ip_v4}"
-  apiserver_dns      = "${format("%s.%s", var.cluster_name, var.openstack_dns_zone)}"
   worker_ip          = "${openstack_compute_instance_v2.worker_node.*.access_ip_v4}"
   worker_count       = "${var.worker_count}"
   private_key        = "${module.secrets.private_key}"

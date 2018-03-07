@@ -22,7 +22,11 @@ variable "apiserver_port" {
   type    = "string"
 }
 
-variable "apiserver_dns" {
+variable "apiserver_internal_dns" {
+  type    = "string"
+}
+
+variable "apiserver_external_dns" {
   type    = "string"
 }
 
