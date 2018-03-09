@@ -186,6 +186,26 @@ variable "openstack_insecure_api" {
   default = true
 }
 
+variable "openstack_username" {
+  type    = "string"
+}
+
+variable "openstack_password" {
+  type    = "string"
+}
+
+variable "openstack_auth_url" {
+  type    = "string"
+}
+
+variable "openstack_tenant_id" {
+  type    = "string"
+}
+
+variable "openstack_domain_name" {
+  type    = "string"
+}
+
 
 
 

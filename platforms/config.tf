@@ -114,12 +114,6 @@ variable "flannel_mode" {
   description = "The flannel mode used (vxlan for clouds or hostgw for baremetal)"
 }
 
-variable "kubeadm_installer_version" {
-  type    = "string"
-  default = "v1.9"
-  description = "The version of kubeadm-installer-coreos used"
-}
-
 variable "helm_version" {
   type    = "string"
   default = "v2.7.2"

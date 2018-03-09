@@ -17,6 +17,8 @@ resource "template_dir" "kubeadm" {
     token              = "${var.token}"
     token_ttl          = "${var.token_ttl}"
     apiserver_dns      = "- ${var.apiserver_external_dns}\n- ${var.apiserver_internal_dns}\n"
+    cloud_provider     = "${var.cloud_provider}"
+    hostname           = "${var.apiserver_external_dns}"
   }
 }
 
@@ -66,5 +68,13 @@ resource "null_resource" "kubeadm_init" {
       "/opt/bin/kubectl apply -f /home/core/kubeadm/kube-network/rbac.yaml",
       "/opt/bin/kubectl apply -f /home/core/kubeadm/kube-network/canal.yaml"
     ]
+  }
+
+  provisioner "local-exec" {
+    command = "scp -i id_rsa_core -o \"ProxyCommand ssh -W %h:%p -i id_rsa_core core@${var.bastion_ip}\" core@${element(var.master_ip,0)}:/home/core/.kube/config ./kubeconfig"
+  }
+
+  provisioner "local-exec" {
+    command = "sed -i \"s:${element(var.master_ip,0)}\\:6443:${var.apiserver_external_dns}\\:${var.apiserver_port}:g\" ./kubeconfig"
   }
 }

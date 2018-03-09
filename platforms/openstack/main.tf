@@ -14,6 +14,14 @@ module "bastion_cloudconfig" {
   resolvconf_content  = ""
   hostname_infix      = "bastion"
   instance_count      = "1"
+
+  cloud_username      = "${var.openstack_username}"
+  cloud_password      = "${var.openstack_password}"
+  cloud_auth_url      = "${var.openstack_auth_url}"
+  cloud_tenant_id     = "${var.openstack_tenant_id}"
+  cloud_domain_name   = "${var.openstack_domain_name}"
+  cloud_subnet_id     = "${openstack_networking_subnet_v2.subnet.id}"
+  cloud_floating_id   = "${var.openstack_floatingip_pool}"
 }
 
 module "master_cloudconfig" {
@@ -24,6 +32,14 @@ module "master_cloudconfig" {
   resolvconf_content = ""
   hostname_infix     = "master"
   instance_count     = "${var.master_count}"
+
+  cloud_username      = "${var.openstack_username}"
+  cloud_password      = "${var.openstack_password}"
+  cloud_auth_url      = "${var.openstack_auth_url}"
+  cloud_tenant_id     = "${var.openstack_tenant_id}"
+  cloud_domain_name   = "${var.openstack_domain_name}"
+  cloud_subnet_id     = "${openstack_networking_subnet_v2.subnet.id}"
+  cloud_floating_id   = "${var.openstack_floatingip_pool}"
 }
 
 
@@ -35,6 +51,14 @@ module "worker_cloudconfig" {
   resolvconf_content = ""
   hostname_infix     = "worker"
   instance_count     = "${var.worker_count}"
+
+  cloud_username      = "${var.openstack_username}"
+  cloud_password      = "${var.openstack_password}"
+  cloud_auth_url      = "${var.openstack_auth_url}"
+  cloud_tenant_id     = "${var.openstack_tenant_id}"
+  cloud_domain_name   = "${var.openstack_domain_name}"
+  cloud_subnet_id     = "${openstack_networking_subnet_v2.subnet.id}"
+  cloud_floating_id   = "${var.openstack_floatingip_pool}"
 }
 
 module "kubeadm" {
@@ -72,7 +96,8 @@ module "kubeadm" {
   calico_cni_version  = "${var.calico_cni_version}"
   flannel_version     = "${var.flannel_version}"
   flannel_mode        = "${var.flannel_mode}"
-  kubeadm_installer_version   = "${var.kubeadm_installer_version}"
+
+  cloud_provider      = "openstack"
 }
 
 module "kubeapps" {

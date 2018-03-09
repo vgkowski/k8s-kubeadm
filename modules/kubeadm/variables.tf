@@ -78,6 +78,6 @@ variable "calico_cni_version" {
   type    = "string"
 }
 
-variable "kubeadm_installer_version" {
+variable "cloud_provider" {
   type    = "string"
 }
