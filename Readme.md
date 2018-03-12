@@ -36,9 +36,7 @@ The Kubernetes token can be generated with
 
   `terraform apply ../../platforms/openstack`
 
-10. Look at the Terraform output to get the list of IPs for different servers
-11. Download the config file from the master in `/home/core/.kube/config`
-12. Modify the URL of the API server to match `<CLUSTER_NAME>.<DNS_ZONE>:<APISERVER_PORT>`
+10. Use the kubeconfig downloaded by Terraform in current directory to access the cluster
 12. If you want to stop and erase the infrastructure
 
   `terraform destroy ../../platforms/openstack`

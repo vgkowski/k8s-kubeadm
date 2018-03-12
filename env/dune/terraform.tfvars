@@ -12,4 +12,4 @@ kube_token         = "7fe841.9261ad1b7f292196"
 cluster_name       = "k8sdev"
 
 worker_count = "2"
-kube_version = "v1.9.1"
+kube_version = "v1.9.2"

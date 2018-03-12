@@ -48,10 +48,10 @@ resource "null_resource" "kubeadm_init" {
       // workaround to introduce a depency on required modules
       "echo ${join(",",var.master_dependencies)}",
       "sudo mkdir -p /opt/cni/bin",
-      "CNI_VERSION=\"v0.6.0\"",
+      "CNI_VERSION=\"${var.cni_version}\"",
       "sudo curl -L \"https://github.com/containernetworking/plugins/releases/download/$${CNI_VERSION}/cni-plugins-amd64-$${CNI_VERSION}.tgz\" | sudo tar -C /opt/cni/bin -xz",
       "sudo mkdir -p /opt/bin",
-      "RELEASE=\"$(curl -sSL https://dl.k8s.io/release/stable.txt)\"",
+      "RELEASE=\"${var.kube_version}\"",
       "cd /opt/bin",
       "sudo curl -L --remote-name-all https://storage.googleapis.com/kubernetes-release/release/$${RELEASE}/bin/linux/amd64/{kubeadm,kubelet,kubectl}",
       "sudo chmod +x {kubeadm,kubelet,kubectl}",
@@ -71,7 +71,7 @@ resource "null_resource" "kubeadm_init" {
   }
 
   provisioner "local-exec" {
-    command = "scp -i id_rsa_core -o \"ProxyCommand ssh -W %h:%p -i id_rsa_core core@${var.bastion_ip}\" core@${element(var.master_ip,0)}:/home/core/.kube/config ./kubeconfig"
+    command = "scp -i id_rsa_core -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o \"ProxyCommand ssh -W %h:%p -i id_rsa_core -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no core@${var.bastion_ip}\" core@${element(var.master_ip,0)}:/home/core/.kube/config ./kubeconfig"
   }
 
   provisioner "local-exec" {

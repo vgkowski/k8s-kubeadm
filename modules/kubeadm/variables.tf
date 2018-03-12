@@ -81,3 +81,7 @@ variable "calico_cni_version" {
 variable "cloud_provider" {
   type    = "string"
 }
+
+variable "cni_version" {
+  type    = "string"
+}

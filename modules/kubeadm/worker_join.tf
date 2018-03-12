@@ -19,10 +19,10 @@ resource "null_resource" "kubeadm_worker_join" {
     inline = [
       "echo ${join(",",var.worker_dependencies)}",
       "sudo mkdir -p /opt/cni/bin",
-      "CNI_VERSION=\"v0.6.0\"",
+      "CNI_VERSION=\"${var.cni_version}\"",
       "sudo curl -L \"https://github.com/containernetworking/plugins/releases/download/$${CNI_VERSION}/cni-plugins-amd64-$${CNI_VERSION}.tgz\" | sudo tar -C /opt/cni/bin -xz",
       "sudo mkdir -p /opt/bin",
-      "RELEASE=\"$(curl -sSL https://dl.k8s.io/release/stable.txt)\"",
+      "RELEASE=\"${var.kube_version}\"",
       "cd /opt/bin",
       "sudo curl -L --remote-name-all https://storage.googleapis.com/kubernetes-release/release/$${RELEASE}/bin/linux/amd64/{kubeadm,kubelet,kubectl}",
       "sudo chmod +x {kubeadm,kubelet,kubectl}",

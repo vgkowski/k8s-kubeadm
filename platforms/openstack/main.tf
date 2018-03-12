@@ -94,6 +94,7 @@ module "kubeadm" {
   token_ttl           = "${var.kube_token_ttl}"
   calico_version      = "${var.calico_version}"
   calico_cni_version  = "${var.calico_cni_version}"
+  cni_version         = "${var.cni_version}"
   flannel_version     = "${var.flannel_version}"
   flannel_mode        = "${var.flannel_mode}"
 

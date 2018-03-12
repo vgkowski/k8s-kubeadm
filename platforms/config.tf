@@ -19,6 +19,15 @@ The version of Kubernetes to install
 EOF
 }
 
+variable "cni_version" {
+  type    = "string"
+  default = "v0.6.0"
+
+  description = <<EOF
+The version of Kubernetes CNI plugin
+EOF
+}
+
 
 variable "master_count" {
   type    = "string"
