@@ -1,0 +1,33 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: cinder
+provisioner: kubernetes.io/cinder
+parameters:
+  availability: nova
+---
+apiVersion: enterprises.upmc.com/v1
+kind: ElasticsearchCluster
+metadata:
+  name: example-es-cluster
+spec:
+  kibana:
+    image: docker.elastic.co/kibana/kibana-oss:6.1.3
+  cerebro:
+    image: upmcenterprises/cerebro:0.6.8
+  elastic-search-image: upmcenterprises/docker-elasticsearch-kubernetes:6.1.3_0
+  client-node-replicas: 3
+  master-node-replicas: 2
+  data-node-replicas: 3
+  network-host: 0.0.0.0
+  data-volume-size: 10Gi
+  java-options: "-Xms512m -Xmx512m"
+  storage:
+    storage-class: cinder
+  resources:
+    requests:
+      memory: 512Mi
+      cpu: 500m
+    limits:
+      memory: 1024Mi
+      cpu: '1'

@@ -1,0 +1,5 @@
+  - path: "/etc/sysctl.d/vm-max.conf"
+    owner: "root"
+    permission: "0644"
+    content: |
+      vm.max_map_count=262144

@@ -23,6 +23,7 @@ data "template_file" "cloud_config" {
     hostname_infix     = "${var.hostname_infix}"
     index              = "${count.index+1}"
     kernel             = "${var.hostname_infix == "worker" ? file("${path.module}/resources/cloud_config_kernel.yaml") : ""}"
+    vm-max             = "${var.hostname_infix == "worker" ? file("${path.module}/resources/cloud_config_vm_max.yaml") : ""}"
     cloud-config       = "${var.hostname_infix != "bastion" ? data.template_file.cloudconf.rendered : "" }"
   }
 }

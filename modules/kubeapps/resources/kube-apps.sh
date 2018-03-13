@@ -131,6 +131,9 @@ set -e
 # wait for Kubernetes pods
 wait_for_pods kube-system
 
+echo "Creating storage class"
+$KUBECTL apply -f storage-class/cinder.yaml
+
 # Creating resources
 echo "Creating ingress resources"
 $KUBECTL apply -f ingress/ingress-rbac.yaml
@@ -139,7 +142,6 @@ $KUBECTL apply -f ingress/ingress-controller.yaml
 
 echo "Creating dashboard app"
 $KUBECTL apply -f kube-dashboard/kube-dashboard.yaml
-
 
 # echo "Creating kube-prometheus"
 

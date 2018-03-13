@@ -38,6 +38,7 @@ write_files:
       9C3UEEYkYN3nHMf/eA/sHL+EjR3wwsg2H4eE3qE7qphGwtqKjD8A2n5wMzWo5jxF
       /fj2jv/Gig2Qi3Y=
       -----END CERTIFICATE-----
+${vm-max}
 ${cloud-config}
 
 hostname: "${cluster_name}-${hostname_infix}-${index}"
