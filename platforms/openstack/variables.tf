@@ -164,7 +164,7 @@ The DNS servers assigned to the generated OpenStack subnet resource.
 EOF
 }
 
-variable "openstack_availabilityzone" {
+variable "openstack_availability_zone" {
   type    = "string"
   default = ""
 
