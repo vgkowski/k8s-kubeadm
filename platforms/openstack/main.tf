@@ -66,13 +66,13 @@ module "kubeadm" {
 
   master_dependencies = "${concat(
     openstack_compute_instance_v2.master_node.*.id,
-    openstack_compute_instance_v2.bastion_node.*.id,
+    openstack_compute_instance_v2.bastion.*.id,
     openstack_networking_floatingip_v2.bastion.*.id
     )}"
 
   worker_dependencies = "${concat(
     openstack_compute_instance_v2.master_node.*.id,
-    openstack_compute_instance_v2.bastion_node.*.id,
+    openstack_compute_instance_v2.bastion.*.id,
     openstack_networking_floatingip_v2.bastion.*.id
     )}"
 
@@ -107,12 +107,12 @@ module "kubeapps" {
   kubeapps_dependencies = "${concat(
     openstack_compute_instance_v2.master_node.*.id,
     openstack_compute_instance_v2.worker_node.*.id,
-    openstack_compute_instance_v2.bastion_node.*.id,
+    openstack_compute_instance_v2.bastion.*.id,
     openstack_networking_floatingip_v2.bastion.*.id,
     list(module.kubeadm.kubeconfig)
     )}"
 
-  master_ip       = "${openstack_compute_instance_v2.master_node.0.access_ip_v4}"
-  bastion_ip       = "${element(openstack_networking_floatingip_v2.bastion.*.address,0)}"
-  private_key        = "${module.secrets.private_key}"
+  master_ip    = "${openstack_compute_instance_v2.master_node.0.access_ip_v4}"
+  bastion_ip   = "${element(openstack_networking_floatingip_v2.bastion.*.address,0)}"
+  private_key  = "${module.secrets.private_key}"
 }

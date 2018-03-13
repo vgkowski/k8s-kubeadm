@@ -14,7 +14,6 @@ resource "openstack_networking_subnet_v2" "subnet" {
   network_id = "${openstack_networking_network_v2.network.id}"
   cidr       = "${var.openstack_subnet_cidr}"
   ip_version = 4
-
   dns_nameservers = ["${var.openstack_dns_nameservers}"]
 }
 
@@ -23,52 +22,7 @@ resource "openstack_networking_router_interface_v2" "interface" {
   subnet_id = "${openstack_networking_subnet_v2.subnet.id}"
 }
 
-# master
-
-resource "openstack_networking_port_v2" "master" {
-  count              = "${var.master_count}"
-  name               = "${var.cluster_name}_port_master_${count.index+1}"
-  network_id         = "${openstack_networking_network_v2.network.id}"
-  security_group_ids = ["${openstack_networking_secgroup_v2.k8s.id}","${openstack_networking_secgroup_v2.master.id}"]
-  admin_state_up     = "true"
-
-  fixed_ip {
-    subnet_id = "${openstack_networking_subnet_v2.subnet.id}"
-  }
-
-  allowed_address_pairs {
-    ip_address = "${var.service_cidr}"
-  }
-
-  allowed_address_pairs {
-    ip_address = "${var.pod_cidr}"
-  }
-}
-
-
 # worker
-
-resource "openstack_networking_port_v2" "worker" {
-  count              = "${var.worker_count}"
-  name               = "${var.cluster_name}_port_worker_${count.index+1}"
-  network_id         = "${openstack_networking_network_v2.network.id}"
-  security_group_ids = ["${openstack_networking_secgroup_v2.k8s.id}","${openstack_networking_secgroup_v2.worker.id}"]
-  admin_state_up     = "true"
-
-  fixed_ip {
-    subnet_id = "${openstack_networking_subnet_v2.subnet.id}"
-  }
-
-  allowed_address_pairs {
-    ip_address = "${var.service_cidr}"
-  }
-
-  allowed_address_pairs {
-    ip_address = "${var.pod_cidr}"
-  }
-}
-
-
 resource "openstack_networking_port_v2" "bastion" {
   count              = "1"
   name               = "${var.cluster_name}_port_bastion_${count.index+1}"
