@@ -39,7 +39,7 @@ module "master_cloudconfig" {
   cloud_tenant_id     = "${var.openstack_tenant_id}"
   cloud_domain_name   = "${var.openstack_domain_name}"
   cloud_subnet_id     = "${openstack_networking_subnet_v2.subnet.id}"
-  cloud_floating_id   = "${var.openstack_floatingip_pool}"
+  cloud_floating_id   = "${var.openstack_floating_id}"
 }
 
 

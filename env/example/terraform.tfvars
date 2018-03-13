@@ -6,6 +6,7 @@ openstack_image_name          = "coreOS-stable"
 openstack_external_gateway_id = "c83555e6-1626-4d71-a5b6-5ffa335448cd"
 openstack_subnet_cidr         = "192.168.206.0/24"
 openstack_floatingip_pool     = "external"
+openstack_floating_id         = "c83555e6-1626-4d71-a5b6-5ffa335448cd"
 openstack_dns_zone            = "caas.vms.dune"
 
 kube_token         = "7fe841.9261ad1b7f292196"

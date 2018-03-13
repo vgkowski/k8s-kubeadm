@@ -125,12 +125,21 @@ The ID of the network to be used as the external internet gateway as given in `o
 EOF
 }
 
-variable "openstack_floatingip_pool" {
+variable "openstack_floating_id" {
   type    = "string"
-  default = "public"
 
   description = <<EOF
-The name name of the floating IP pool
+The id of the floating IP pool
+as given in `openstack floating ip list`.
+This pool will be used to assign floating IPs to worker and master nodes.
+EOF
+}
+
+variable "openstack_floatingip_pool" {
+  type    = "string"
+
+  description = <<EOF
+The name of the floating IP pool
 as given in `openstack floating ip list`.
 This pool will be used to assign floating IPs to worker and master nodes.
 EOF
@@ -205,7 +214,5 @@ variable "openstack_tenant_id" {
 variable "openstack_domain_name" {
   type    = "string"
 }
-
-
 
 
