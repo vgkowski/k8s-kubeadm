@@ -22,8 +22,6 @@ spec:
   network-host: 0.0.0.0
   data-volume-size: 10Gi
   java-options: "-Xms512m -Xmx512m"
-  storage:
-    storage-class: cinder
   resources:
     requests:
       memory: 512Mi
@@ -31,3 +29,9 @@ spec:
     limits:
       memory: 1024Mi
       cpu: '1'
+  snapshot:
+    scheduler-enabled: false
+    bucket-name: elasticsnapshots99
+    cron-schedule: "@every 2m"
+  storage:
+    storage-class: cinder
