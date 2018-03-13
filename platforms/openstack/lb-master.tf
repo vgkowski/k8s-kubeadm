@@ -38,7 +38,6 @@ resource "openstack_lb_member_v2" "master_lb_members" {
   weight        = 1
 }
 
-
 resource "openstack_networking_floatingip_v2" "loadbalancer" {
   pool    = "${var.openstack_floatingip_pool}"
   port_id = "${openstack_lb_loadbalancer_v2.master_lb.vip_port_id}"

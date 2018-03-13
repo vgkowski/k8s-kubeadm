@@ -1,12 +1,3 @@
-variable "openstack_neutron_config_version" {
-  description = <<EOF
-(internal) This declares the version of the OpenStack Neutron configuration variables.
-It has no impact on generated assets but declares the version contract of the configuration.
-EOF
-
-  default = "1.0"
-}
-
 variable "openstack_master_flavor_name" {
   type    = "string"
   default = ""
@@ -84,17 +75,6 @@ Note: Set either openstack_bastion_flavor_name or openstack_bastion_flavor_id.
 EOF
 }
 
-variable "openstack_edge_flavor_id" {
-  type    = "string"
-  default = ""
-
-  description = <<EOF
-The flavor id for edge instances as given in `openstack flavor list`. Specifies the size (CPU/Memory/Drive) of the VM.
-
-Note: Set either openstack_edge_flavor_name or openstack_edge_flavor_id.
-EOF
-}
-
 variable "openstack_image_name" {
   type    = "string"
   default = ""
@@ -138,7 +118,7 @@ EOF
 
 variable "openstack_subnet_cidr" {
   type    = "string"
-  default = "192.168.1.0/24"
+  default = "192.168.0.0/16"
 
   description = <<EOF
 The subnet CIDR for the master/worker/etcd compute nodes.
@@ -155,7 +135,7 @@ The DNS servers assigned to the generated OpenStack subnet resource.
 EOF
 }
 
-variable "openstack_availabilityzone" {
+variable "openstack_availability_zone" {
   type    = "string"
   default = ""
 
@@ -183,7 +163,7 @@ EOF
 }
 
 variable "openstack_insecure_api" {
-  default = true
+  default = false
 }
 
 variable "openstack_username" {
@@ -205,7 +185,3 @@ variable "openstack_tenant_id" {
 variable "openstack_domain_name" {
   type    = "string"
 }
-
-
-
-
