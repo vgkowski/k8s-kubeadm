@@ -22,8 +22,6 @@ spec:
   network-host: 0.0.0.0
   data-volume-size: 10Gi
   java-options: "-Xms512m -Xmx512m"
-  storage:
-    storage-class: cinder
   resources:
     requests:
       memory: 512Mi
@@ -59,3 +57,4 @@ spec:
     component: elasticsearch-vg-cluster
     role: cerebro
   type: LoadBalancer
+
