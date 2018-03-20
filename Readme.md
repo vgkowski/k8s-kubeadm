@@ -24,16 +24,6 @@ The Kubernetes token can be generated with
 
 9. Build the cluster with
 
-  `TF_VAR_openstack_username=$OS_USERNAME \`
-
-  `TF_VAR_openstack_password=$OS_PASSWORD \`
-
-  `TF_VAR_openstack_auth_url=$OS_AUTH_URL \`
-
-  `TF_VAR_openstack_tenant_id=$OS_PROJECT_ID \`
-
-  `TF_VAR_openstack_domain_name=$OS_USER_DOMAIN_NAME \`
-
   `INSTANCE=<CLUSTER_NAME> make apply`
 
 10. Use the kubeconfig downloaded by Terraform in current directory to access the cluster
