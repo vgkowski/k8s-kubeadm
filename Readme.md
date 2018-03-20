@@ -16,11 +16,11 @@ The Kubernetes token can be generated with
 
 7. Initiate Terraform to download the required Terraform modules with
 
-  `terraform init ../../platforms/openstack`
+  `INSTANCE=<CLUSTER_NAME> make init` 
 
 8. Get Terraform with
 
-  `terraform get ../../platforms/openstack`
+  `INSTANCE=<CLUSTER_NAME> make get` 
 
 9. Build the cluster with
 
@@ -34,9 +34,9 @@ The Kubernetes token can be generated with
 
   `TF_VAR_openstack_domain_name=$OS_USER_DOMAIN_NAME \`
 
-  `terraform apply ../../platforms/openstack`
+  `INSTANCE=<CLUSTER_NAME> make apply`
 
 10. Use the kubeconfig downloaded by Terraform in current directory to access the cluster
 12. If you want to stop and erase the infrastructure
 
-  `terraform destroy ../../platforms/openstack`
+  `INSTANCE=<CLUSTER_NAME> make destroy`
