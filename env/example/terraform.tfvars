@@ -1,5 +1,5 @@
 openstack_master_flavor_name  = "Large_Linux"
-openstack_worker_flavor_name  = "Large_Linux"
+openstack_worker_flavor_name  = "VeryHighMEM_Linux"
 openstack_bastion_flavor_name = "Tiny_Linux"
 openstack_edge_flavor_name    = "Tiny_Linux"
 openstack_image_name          = "coreOS-stable"

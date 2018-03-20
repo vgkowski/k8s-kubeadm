@@ -16,18 +16,20 @@ spec:
   cerebro:
     image: upmcenterprises/cerebro:0.6.8
   elastic-search-image: upmcenterprises/docker-elasticsearch-kubernetes:6.1.3_0
-  client-node-replicas: 3
+  client-node-replicas: 2
   master-node-replicas: 2
-  data-node-replicas: 3
+  data-node-replicas: 5
   network-host: 0.0.0.0
   data-volume-size: 10Gi
-  java-options: "-Xms512m -Xmx512m"
+  storage:
+    storage-class: cinder
+  java-options: "-Xms2048m -Xmx2048m"
   resources:
     requests:
-      memory: 512Mi
-      cpu: 500m
+      memory: 4096Mi
+      cpu: '1'
     limits:
-      memory: 1024Mi
+      memory: 4096Mi
       cpu: '1'
 ---
 kind: Service
