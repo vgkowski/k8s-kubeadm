@@ -1,6 +1,12 @@
 INSTANCE ?= 
 OPENSTACK_TF_FILES ?= platforms/openstack
 
+export TF_VAR_openstack_username=$(OS_USERNAME)
+export TF_VAR_openstack_password=$(OS_PASSWORD)
+export TF_VAR_openstack_auth_url=$(OS_AUTH_URL)
+export TF_VAR_openstack_tenant_id=$(OS_PROJECT_ID)
+export TF_VAR_openstack_domain_name=$(OS_USER_DOMAIN_NAME)
+
 init:
 	terraform init platforms/openstack
 
